@@ -1,12 +1,45 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { SplitText, ScrollTrigger } from "gsap/all";
+
+gsap.registerPlugin(ScrollTrigger, SplitText);
 const Hero = () => {
 
   useGSAP(() => {
-    gsap.to("#text", { 
-      opacity: 1,
-      y: 0,
-      ease: "power1.out",
+    const heroSplit = new SplitText(".title", {
+      type: "chars, words",
+    });
+    
+    const paragraphSplit = new SplitText(".subtitle", {
+      type: "lines",
+    });
+
+    gsap.from(heroSplit.chars, {
+      yPercent: 100,
+      duration: 1.8,
+      ease: "expo.out",
+      stagger: 0.06,
+    });
+      
+    gsap.from(paragraphSplit.lines, {
+      opacity: 0,
+      duration: 1.8,
+      ease: "expo.out",
+      stagger: 0.06,
+      delay: 1,
+    });
+      
+    gsap.fromTo(".subtitle-bottom", 
+      { 
+        opacity: 0,
+        y: 100
+      },
+      { 
+        opacity: 1,
+        y: 0,
+        ease: "power1.out",
+        stagger: 0.3,
+        delay: 0.5
     });
 
     gsap.fromTo("#logo-left", 
@@ -21,10 +54,23 @@ const Hero = () => {
         stagger: 0.3,
         delay: 0.5
     });
-  }, []);
+
+    gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: "#hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    })
+    .to(".sword", { x: -200 }, 0)
+    .to(".boat", { x: 200 }, 0)
+    .to(".arrow", { y: 100 }, 0);
+    }, []);
 
   return (
-    <section className="bg-[#d35f1c] relative z-[13] w-full" id="hero">
+    <section className="bg-[#d35f1c] relative z-13 w-full" id="hero">
       {/* Gradient Overlays */}
       <div 
         aria-hidden="true" 
@@ -43,12 +89,12 @@ const Hero = () => {
       <img 
         src="images/img-sword.png" 
         alt="" 
-        className="hidden lg:block absolute h-[60%] left-[27%] -bottom-[10%] z-20"
+        className="hidden lg:block absolute h-[60%] left-[27%] -bottom-[10%] z-20 sword"
       />
       <img 
         src="images/img-boat.png" 
         alt="" 
-        className="hidden lg:block absolute h-[40%] right-[10%] -bottom-[8%] z-20"
+        className="hidden lg:block absolute h-[40%] right-[10%] -bottom-[8%] z-20 boat"
       />
 
       {/* Main Content Grid */}
@@ -60,26 +106,22 @@ const Hero = () => {
           id="logo-left"
         />
         
-        <div className="col-span-4 flex flex-col items-end px-6 pt-6 lg:px-8 w-full gap-y-20 justify-between">
+        <div className="col-span-4 flex flex-col items-end px-6 pt-6 lg:px-8 w-full gap-y-20 justify-start max-h-[250px] lg:max-h-[300px]">
           <p className="qurova-regular text-white text-right text-[10px] md:text-sm lg:text-lg">
             www.orangehelm.com
           </p>
           
-          <div className="flex flex-row items-start w-full">
-            <div className="shrink grow-[1.7] basis-0 flex flex-col items-start gap-4 md:gap-2 lg:gap-0 mt-4 lg:mt-45 md:mt-30">
-              <h1 className="qurova-regular text-lg md:text-4xl lg:text-5xl tracking-tight text-white">
-                Welcome to <span className="sr-only">Orange Helm</span>
-              </h1>
+          <div className="flex flex-row items-start justify-end w-full mt-20">
+            <div className="flex flex-col items-start gap-0 space-y-5">
+              <p className="qurova-regular text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-0 subtitle">
+                Welcome to
+              </p>
               
-              <img 
-                className="-mt-7 md:-mt-10" 
-                src="images/img-logo-text.png" 
-                alt="Orange Helm"
-              />
+              <h1 className="text-6xl xs:text-6xl sm:text-7xl md:text-8xl xl:text-9xl qurova-bold text-white -mt-2 sm:-mt-2 md:-mt-4 lg:-mt-6 mb-0 title">orange<span className="qurova-regular">helm</span></h1>
               
-              <div className="items-center justify-center rounded-md bg-[#fff8ed] py-1 text-[#d35f1c] self-end -mt-4 md:-mt-8 xl:px-14 lg:px-10 px-2 text-[10px] sm:text-md md:text-md lg:text-lg">
+              <p className="items-center justify-center rounded-md bg-[#fff8ed] py-1 text-[#d35f1c] self-end px-4 text-xs xs:text-sm sm:text-lmd md:text-lg subtitle-bottom">
                 Steering Strong Brands Forward.
-              </div>
+              </p>
             </div>
           </div>
         </div>
@@ -93,7 +135,7 @@ const Hero = () => {
         <img 
           src="images/img-wave.png" 
           alt="" 
-          className="object-cover aspect-auto size-full relative"
+          className="object-fit aspect-auto size-full relative"
         />
       </div>
 
