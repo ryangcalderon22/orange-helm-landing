@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'qurova_demobold';
+  src: url('../fonts/qurovademo-bold-bf67a5c637eed62-webfont.woff2') format('woff2'),
+        url('../fonts/qurovademo-bold-bf67a5c637eed62-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'qurova_demoregular';
+  src: url('../fonts/qurovademo-regular-bf67a5c637a5dc9-webfont.woff2') format('woff2'),
+        url('../fonts/qurovademo-regular-bf67a5c637a5dc9-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'agrandirregular';
+  src: url('../fonts/agrandir-regular-webfont.woff2') format('woff2'),
+        url('../fonts/agrandir-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@theme {
+    --color-orange: #d35f1c;
+    --color-white-100: #efefef;
+    --font-sans: 'agrandirregular', sans-serif;
+    --font-modern-negra: "qurova_demobold", sans-serif;
+    --font-serif: "qurova_demobold", serif;
+}
+
+html,
+body {
+  font-family: 'agrandirregular', sans-serif;
+  color: #1e1e1e;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.qurova-bold {
+  font-family: 'qurova_demobold', serif;
+}
+
+.qurova-regular {
+  font-family: 'qurova_demoregular', serif;
+}
+
+@utility flex-center {
+  @apply flex justify-center items-center;
+}
