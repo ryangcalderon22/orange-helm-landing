@@ -41,6 +41,10 @@ body {
   width: 100%;
 }
 
+#root {
+  overflow-y: hidden;
+}
+
 .qurova-bold {
   font-family: 'qurova_demobold', serif;
 }
