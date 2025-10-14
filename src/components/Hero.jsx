@@ -55,6 +55,14 @@ const Hero = () => {
         delay: 0.5
     });
 
+    gsap.from('.sword, .boat', {
+      opacity: 0,
+      duration: 1.8,
+      ease: "expo.out",
+      stagger: 0.06,
+      delay: 1.1,
+    });
+
     gsap
     .timeline({
       scrollTrigger: {
@@ -64,8 +72,8 @@ const Hero = () => {
         scrub: true,
       },
     })
-    .to(".sword", { x: -200 }, 0)
-    .to(".boat", { x: 200 }, 0)
+    .to(".sword, .nav-left-img", { x: -50 }, 0)
+    .to(".boat, .nav-right-img", { x: 50 }, 0)
     .to(".arrow", { y: 100 }, 0);
     }, []);
 
@@ -192,16 +200,16 @@ const Hero = () => {
       </div>
 
       {/* Navigation Background Decorations */}
-      <div aria-hidden="true" className="hidden lg:block absolute left-[5%] -bottom-15 z-20">
+      <div aria-hidden="true" className="hidden lg:block absolute left-[5%] -bottom-15 z-20 nav-left-img">
         <img src="images/nav-bg-2.png" alt="" className="relative h-12" />
       </div>
-      <div aria-hidden="true" className="hidden lg:block absolute left-[26%] -bottom-15 z-20">
+      <div aria-hidden="true" className="hidden lg:block absolute left-[26%] -bottom-15 z-20 nav-left-img">
         <img src="images/nav-bg-1.png" alt="" className="relative h-12" />
       </div>
-      <div aria-hidden="true" className="hidden lg:block absolute right-[26%] -bottom-15 z-20">
+      <div aria-hidden="true" className="hidden lg:block absolute right-[26%] -bottom-15 z-20 nav-right-img">
         <img src="images/nav-bg-1.png" alt="" className="relative h-12" />
       </div>
-      <div aria-hidden="true" className="hidden lg:block absolute right-[8%] -bottom-15 z-20">
+      <div aria-hidden="true" className="hidden lg:block absolute right-[8%] -bottom-15 z-20 nav-right-img">
         <img src="images/nav-bg-2.png" alt="" className="relative h-12" />
       </div>
     </section>
