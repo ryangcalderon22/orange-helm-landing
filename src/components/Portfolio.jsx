@@ -1,13 +1,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText, ScrollTrigger } from "gsap/all";
-import { useState } from "react";
+import { useState, useRef } from "react";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 import { allPortfolioGallery } from '../../constants/index.js';
 
 export default function PortfolioSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const videoRef = useRef();
   useGSAP(() => {
     gsap.fromTo('.portfolio-gallery img', 
       { opacity: 0, xPercent: -100 }, 
@@ -25,8 +25,8 @@ export default function PortfolioSection() {
       stagger: 0.06,
     });
 
-    gsap.from('.rock-big, .rock-small, .tree, .road, .portfolio-plant', {
-      yPercent: 100,
+    gsap.from('.rock-big, .rock-small, .tree, .portfolio-plant', {
+      yPercent: 40,
       opacity: 0,
       duration: 1.8,
       ease: "expo.out",
@@ -44,13 +44,33 @@ export default function PortfolioSection() {
         },
       })
       .to(".rock-big, .rock-small", { x: -150, y: -150 }, 0)
-      .to(".tree", { y: -250 }, 0);
+      .to(".tree", { y: -250 }, 0)
+      .to('.portfolio-plant', { y: 100 }, 0);
+
+      let tl = gsap.timeline({
+        scrollTrigger: {
+        trigger: "video",
+        start: 'top top',
+        end: 'bottom bottoom',
+        scrub: true,
+        },
+      });
+
+      videoRef.current.onloadedmetadata = () => {
+        tl.to(videoRef.current, {
+          currentTime: videoRef.current.duration,
+          y: 150, // Move down 300px
+          x: 150, // Move right 300px
+          scale: 1.2, // Optional: scale up
+          ease: 'none',
+        });
+      };
   }, []);
 
   useGSAP(() => {
     gsap.fromTo('.portfolio-gallery img', 
-      { opacity: 0, xPercent: -100 }, 
-      { xPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut' }
+      { opacity: 0 }, 
+      { opacity: 1, duration: 1, ease: 'power1.inOut' }
     );
   }, [currentIndex]);
 
@@ -72,7 +92,7 @@ export default function PortfolioSection() {
     <section className="bg-[#1e1e1e] relative z-13 w-full" id="portfolio">
       <div className="relative">
         {/* Background Road Image */}
-        <div className="hidden lg:block absolute inset-x-0 inset-y-0 -top-50">
+        <div className="hidden lg:block absolute inset-x-0 inset-y-0 -top-30">
           <img
             src="images/img-road.png"
             alt=""
@@ -81,11 +101,21 @@ export default function PortfolioSection() {
         </div>
 
         {/* Warrior Image */}
-        <div
+        {/* <div
           aria-hidden="true"
           className="hidden lg:block absolute -top-95 inset-x-0 m-auto w-42 h-42 z-20"
         >
           <img src="images/img-warrior.png" alt="" className="relative h-42" />
+        </div> */}
+        <div className="overflow-hidden w-full">
+          <video
+          className="hidden lg:block absolute -top-105 inset-x-0 m-auto h-50 z-20"
+          ref={videoRef}
+          muted
+          playsInline
+          preload="auto"
+          src="/videos/viking.webm"
+        />
         </div>
 
         {/* Tree Image */}

@@ -44,7 +44,31 @@ const allPortfolioGallery = [
  }
 ];
 
+const socialLinks = [
+  {
+    name: 'Facebook',
+    icon: 'images/social-icons/icon-facebook.png',
+    url: '#'
+  },
+  {
+    name: 'Instagram',
+    icon: 'images/social-icons/icon-instagram.png',
+    url: '#'
+  },
+  {
+    name: 'LinkedIn',
+    icon: 'images/social-icons/icon-linkedin.png',
+    url: '#'
+  },
+  {
+    name: 'YouTube',
+    icon: 'images/social-icons/icon-youtube.png',
+    url: '#'
+  }
+];
+
 export {
  brands,
- allPortfolioGallery
+ allPortfolioGallery,
+ socialLinks
 };

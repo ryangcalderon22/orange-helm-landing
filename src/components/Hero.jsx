@@ -1,10 +1,11 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useRef } from "react";
 import { SplitText, ScrollTrigger } from "gsap/all";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 const Hero = () => {
-
+  const videoRef = useRef();
   useGSAP(() => {
     const heroSplit = new SplitText(".title", {
       type: "chars, words",
@@ -75,6 +76,21 @@ const Hero = () => {
     .to(".sword, .nav-left-img", { x: -50 }, 0)
     .to(".boat, .nav-right-img", { x: 50 }, 0)
     .to(".arrow", { y: 100 }, 0);
+
+    let tl = gsap.timeline({
+      scrollTrigger: {
+      trigger: "video",
+      start: 'center 60%',
+      end: 'bottom top',
+      scrub: true,
+      },
+    });
+
+    videoRef.current.onloadedmetadata = () => {
+      tl.to(videoRef.current, {
+        currentTime: videoRef.current.duration,
+      });
+    };
     }, []);
 
   return (
@@ -136,7 +152,7 @@ const Hero = () => {
       </div>
 
       {/* Wave Decoration */}
-      <div 
+      {/* <div 
         aria-hidden="true" 
         className="absolute inset-x-0 bottom-0 z-10 h-15 xs:h-25 sm:h-35 w-full"
       >
@@ -145,7 +161,15 @@ const Hero = () => {
           alt="" 
           className="object-fit aspect-auto size-full relative"
         />
-      </div>
+      </div> */}
+      <video
+        className="w-full absolute bottom-0 left-0 object-bottom object-cover"
+        ref={videoRef}
+        muted
+        playsInline
+        preload="auto"
+        src="/videos/output.webm"
+      />
 
       {/* Desktop Navigation */}
       <div className="hidden lg:block absolute -bottom-30 z-30 px-6 h-20 w-full">
